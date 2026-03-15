@@ -1,0 +1,29 @@
+model_list:
+  # 主模型：Gemini 3 Flash 免费版（优先调用）
+  - model_name: gemini-3-flash-preview-free
+    litellm_params:
+      model: gemini-3-flash-preview-free     # 必须和AIHubmix的模型ID完全一致
+      api_key: "os.environ/AIHUBMIX_KEY"     # 从.env读取AIHubmix密钥（安全）
+      api_base: https://aihubmix.com/v1      # AIHubmix的OpenAI兼容接口
+      temperature: 0.7                       # 匹配.env中的温度配置
+      timeout: 60                            # 免费版模型响应慢，延长超时
+
+  # 备用模型：GPT-4o-mini（Gemini调用失败时自动切换）
+  - model_name: gpt-4.1-free
+    litellm_params:
+      model: gpt-4.1-free
+      api_key: "os.environ/AIHUBMIX_KEY"
+      api_base: https://aihubmix.com/v1
+      temperature: 0.7
+      timeout: 30                            # GPT模型响应快，超时可短些
+
+# ===================================
+# 多模型路由策略（核心：故障转移+负载均衡）
+# ===================================
+router_settings:
+  routing_strategy: least-busy  # 优先调用最空闲的模型（智能负载均衡）
+  # 可选策略：failover → 严格故障转移（主模型失败才用备用）
+  num_retries: 3                # 多模型时增加重试次数
+  allowed_fails: 2              # 单个模型连续失败2次后暂时冷却
+  cooldown_time: 300            # 冷却5分钟（避免重复调用失效模型）
+  timeout: 60                   # 全局请求超时
