@@ -612,6 +612,10 @@ class Config:
         2. .env 文件
         3. 代码中的默认值
         """
+        env_path = Path(__file__).parent.parent / '.env'
+        if env_path.exists():
+            from dotenv import load_dotenv
+            load_dotenv(dotenv_path=env_path, override=True)
         # 确保环境变量已加载
         setup_env()
 
@@ -704,6 +708,7 @@ class Config:
 
         # LITELLM_MODEL: explicit config takes precedence; else infer from available keys
         litellm_model = os.getenv('LITELLM_MODEL', '').strip()
+        print(f"DEBUG: LITELLM_MODEL from env = '{litellm_model}'") 
         if not litellm_model:
             _gemini_model_name = os.getenv('GEMINI_MODEL', 'gemini-3-flash-preview').strip()
             _anthropic_model_name = os.getenv('ANTHROPIC_MODEL', 'claude-3-5-sonnet-20241022').strip()
