@@ -2,7 +2,7 @@ model_list:
   # 主模型：Gemini 3 Flash 免费版（优先调用）
   - model_name: gemini-3-flash-preview-free
     litellm_params:
-      model: gemini-3-flash-preview-free     # 必须和AIHubmix的模型ID完全一致
+      model: openai/gemini-3-flash-preview-free     # 必须和AIHubmix的模型ID完全一致
       api_key: "os.environ/AIHUBMIX_KEY"     # 从.env读取AIHubmix密钥（安全）
       api_base: https://aihubmix.com/v1      # AIHubmix的OpenAI兼容接口
       temperature: 0.7                       # 匹配.env中的温度配置
@@ -11,7 +11,7 @@ model_list:
   # 备用模型：GPT-4o-mini（Gemini调用失败时自动切换）
   - model_name: gpt-4.1-free
     litellm_params:
-      model: gpt-4.1-free
+      model: openai/gpt-4.1-free
       api_key: "os.environ/AIHUBMIX_KEY"
       api_base: https://aihubmix.com/v1
       temperature: 0.7
