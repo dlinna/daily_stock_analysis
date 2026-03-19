@@ -7,7 +7,7 @@ model_list:
   - model_name: gemini-3-flash-preview-free
     litellm_params:
       model: openai/gemini-3-flash-preview-free  # 确认AIHubmix实际支持的模型名
-      api_key: "os.environ/AIHUBMIX_API_KEY"      # 与.env中统一
+      api_key: "os.environ/AIHUBMIX_KEY"      # 与.env中统一
       api_base: https://aihubmix.com/v1
       temperature: 0.7
       timeout: 60
@@ -18,7 +18,7 @@ model_list:
   - model_name: deepseek-v3-2-exp
     litellm_params:
       model: openai/deepseek-v3-2-exp
-      api_key: "os.environ/CHATANYWHERE_API_KEY"  # 与.env中统一
+      api_key: "os.environ/CHATANYWHERE_KEY"  # 与.env中统一
       api_base: https://api.chatanywhere.tech/v1
       temperature: 0.7
       timeout: 45
