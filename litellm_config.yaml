@@ -1,15 +1,8 @@
 # ===================================
-# LiteLLM 高级配置 - 多平台故障转移
+# LiteLLM 高级配置
 # ===================================
 
 model_list:
-  # 路由器虚拟模型
-   - model_name: my-multi-model-router
-    litellm_params:
-      model: openai/gpt-4o-mini    # 指定一个默认模型，当路由器策略无法决定时使用
-      api_key: "os.environ/CHATANYWHERE_KEY"
-      api_base: https://api.chatanywhere.tech/v1
-  
   # 1. AIHubmix - Gemini 3 Flash（第一优先级）
   - model_name: gemini-3-flash-preview-free
     litellm_params:
@@ -38,29 +31,3 @@ model_list:
       api_base: https://api.chatanywhere.tech/v1
       temperature: 0.7
       timeout: 35
-
-# 路由配置：故障转移 + 自动重试
-router_settings:
-  # 虚拟模型名（.env中的 LITELLM_MODEL 必须与此一致）
-  model_name: my-multi-model-router
-  
-  # 路由策略：failover = 按优先级故障转移
-  routing_strategy: failover
-  
-  # 候选模型优先级（从左到右依次尝试）
-  model_selection:
-    - gemini-3-flash-preview-free   # 主模型：AIHubmix Gemini
-    - deepseek-v3-2-exp            # 备用1：ChatAnywhere DeepSeek
-    - gpt4o-mini-chatanywhere      # 备用2：ChatAnywhere GPT
-  
-  # 容错配置
-  num_retries: 2                   # 单个请求重试2次
-  allowed_fails: 2                 # 模型连续失败2次后进入冷却
-  cooldown_time: 300               # 冷却5分钟（300秒）
-  timeout: 60                      # 全局超时60秒
-  
-  # 上下文保持（故障转移时保留对话历史）
-  enable_cooldowns: true
-  routing_strategy_args:
-    # 可选：启用健康检查
-    check_interval: 60
