@@ -3,14 +3,21 @@
 # ===================================
 
 model_list:
+  # 路由器虚拟模型
+   - model_name: my-multi-model-router
+    litellm_params:
+      model: openai/gpt-4o-mini    # 指定一个默认模型，当路由器策略无法决定时使用
+      api_key: ${CHATANYWHERE_KEY}
+      api_base: https://api.chatanywhere.tech/v1
+  
   # 1. AIHubmix - Gemini 3 Flash（第一优先级）
   - model_name: gemini-3-flash-preview-free
     litellm_params:
       model: openai/gemini-3-flash-preview-free  # 确认AIHubmix实际支持的模型名
-      api_key: "os.environ/AIHUBMIX_KEY"      # 与.env中统一
+      api_key:  ${AIHUBMIX_KEY}     # 与.env中统一
       api_base: https://aihubmix.com/v1
       temperature: 0.7
-      timeout: 60
+      timeout: 35
       # 可选：添加RPM限制防止触发限流
       # rpm: 10
 
@@ -18,19 +25,19 @@ model_list:
   - model_name: deepseek-v3-2-exp
     litellm_params:
       model: openai/deepseek-v3-2-exp
-      api_key: "os.environ/CHATANYWHERE_KEY"  # 与.env中统一
+      api_key:  ${CHATANYWHERE_KEY} # 与.env中统一
       api_base: https://api.chatanywhere.tech/v1
       temperature: 0.7
-      timeout: 45
+      timeout: 35
 
   # 3. ChatAnywhere - GPT-4o-mini（备用2）
   - model_name: gpt4o-mini-chatanywhere
     litellm_params:
       model: openai/gpt-4o-mini
-      api_key: "os.environ/CHATANYWHERE_API_KEY"
+      api_key: ${CHATANYWHERE_KEY}
       api_base: https://api.chatanywhere.tech/v1
       temperature: 0.7
-      timeout: 45
+      timeout: 35
 
 # 路由配置：故障转移 + 自动重试
 router_settings:
@@ -56,4 +63,4 @@ router_settings:
   enable_cooldowns: true
   routing_strategy_args:
     # 可选：启用健康检查
-    check_interval: 30
+    check_interval: 60
