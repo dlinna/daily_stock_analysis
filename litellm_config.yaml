@@ -4,10 +4,10 @@
 
 model_list:
   # 2. 
-  - model_name: qwq-32b-free
+  - model_name: Qwen3-30B-A3B
     litellm_params:
-      model: openai/free:QwQ-32B
-      api_key: "os.environ/QWQ_API_KEY"   # 从网站获取的 API Key
+      model: openai/free:Qwen3-30B-A3B
+      api_key: "os.environ/ABCD_KEY"   # 从网站获取的 API Key
       api_base: https://api.suanli.cn/v1
       temperature: 0.7
 
