@@ -3,6 +3,14 @@
 # ===================================
 
 model_list:
+  # 2. 
+  - model_name: qwq-32b-free
+    litellm_params:
+      model: openai/free:QwQ-32B
+      api_key: "os.environ/QWQ_API_KEY"   # 从网站获取的 API Key
+      api_base: https://api.suanli.cn/v1
+      temperature: 0.7
+
   # 1. AIHubmix - Gemini 3 Flash（第一优先级）
   - model_name: gemini-3-flash-preview-free
     litellm_params:
