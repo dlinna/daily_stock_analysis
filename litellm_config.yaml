@@ -6,7 +6,7 @@ model_list:
   # 2. 
   - model_name: Qwen3-VL-32B-Thinking
     litellm_params:
-      model: openai/Qwen/Qwen3-VL-32B-Thinking
+      model: openai/Qwen/QwQ-32B
       api_key: "os.environ/ABCD_KEY"   # 从网站获取的 API Key
       api_base: https://api.suanli.cn/v1
       temperature: 0.7
